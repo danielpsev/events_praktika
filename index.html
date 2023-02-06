@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Events</title>
+    <style>
+        body{
+            padding: 20px;
+            background-color: var(--bs-gray-dark)
+        }
+        #loadBtn{
+            margin: 20px 5px;
+        }
+        .load-container{
+            width: 100%;
+            height: 50px;
+            background-color: #eee;
+        }
+        .load{
+            width: 0px;
+            height: 100%;
+            background-color: aquamarine;
+            transition: 1s linear;
+        }
+        .square{
+            display: none;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(12, 137, 226);;
+        }
+        .animation{
+            animation: 2s load linear 1;
+        }
+        @keyframes load{
+            from{
+                width: 0px;
+            }
+            to{
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1></h1>
+    <div class="main">
+        <button type="button" class="btn btn-primary" id="loadBtn">Load</button>
+        <div class="load-container">
+            <div class="load"></div>
+        </div>
+    </div>
+    <div class="coords"></div>
+    <div class="square"></div>
+    <script>
+        var isLoaded = false;
+
+        let main = document.querySelector('.main');
+        let loadBtn = document.querySelector('#loadBtn');
+        let load = document.querySelector('.load');
+        let square = document.querySelector('.square');
+        let pos;
+        document.addEventListener('keypress', (e) =>{
+
+            if(isLoaded){
+                switch(e.keyCode){
+                case 97:
+                    console.log('a (left)');
+                    pos = square.offsetLeft -= 10;
+                    square.style.left = pos + 'px';
+                    break;
+                case 100:
+                    console.log('d (right)');
+                    pos = square.offsetLeft += 10;
+                    square.style.left = pos + 'px';
+                     break;
+                case 119:
+                    console.log('w (up)');
+                    pos = square.offsetTop -= 10;
+                    square.style.top = pos + 'px';
+                    break;
+                case 115:
+                    console.log('s (down)');
+                    pos = square.offsetTop += 10;
+                    square.style.top = pos + 'px';
+                    break;
+            }
+            }
+        });
+        loadBtn.addEventListener('click', () => {
+            //load.style.width = '100%';
+            load.classList.add('animation');
+            load.addEventListener('animationend', () => {
+                main.style.display = 'none';
+                square.style.display = 'block';
+                isLoaded = true;
+            });
+        });
+
+
+    </script>
+</body>
+</html>
